@@ -1,0 +1,49 @@
+
+
+package okomok.mbpstest
+
+
+// https://issues.scala-lang.org/browse/SI-3443
+// http://article.gmane.org/gmane.comp.lang.scala.user/34913/match=type+level
+
+
+object Test extends App {
+
+    trait TFn1 {
+      type I
+      type app[i <: I]
+    }
+
+    type TFn1Of[_I, _O] = TFn1 {
+        type I = _I
+        type app[i <: I] <: _O
+    }
+
+    type K = TFn1 {
+        type I = a
+        type O = TFn1 {
+            type I = T
+            type O = b
+            type app[i <: I] <: b
+        }
+        type app[i <: I] <: O
+    }
+
+
+    type T  = Int
+    type a = Char
+    type b = Double
+
+    type x[ f <: K ] = TFn1Of[T, b] {
+        type app[s <: T] = f#app[a]    #app[s]
+        //                   <: f.O
+    }
+
+        // type If[T <: Up, F <: Up, Up] <: Up
+        trait If {
+            type apply[T <: Up, F <: Up]
+        }
+
+
+
+}

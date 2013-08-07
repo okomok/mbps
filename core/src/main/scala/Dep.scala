@@ -4,22 +4,22 @@ package okomok.mpbs
 
 object PathDepType {
 
-    trait Able {
+    trait K {
         type A // abstract type member
     }
 
-    trait a extends Able {
+    trait a extends K {
         override type A = Int
     }
 
-    trait b extends Able {
+    trait b extends K {
         override type A = Char
     }
 
     implicitly[Int =:= a#A]
     implicitly[Char =:= b#A]
 
-    object c extends Able {
+    object c extends K {
         override type A = String
     }
 
@@ -30,25 +30,13 @@ object PathDepType {
 
     val s: String = id("hello")
 
-    def foo(a: Able): a.A = ???
+    def foo(a: K): a.A = ???
 
-    type A[a <: Able] = a#A
+    type A[a <: K] = a#A
 
     trait PathDepFun[A[_]] {
-        def apply(a: Able): A[a.type] = ???
+        def apply(a: K): A[a.type] = ???
     }
 }
-
-
-
-object SingType {
-    object x {
-        val y: String = ""
-    }
-
-    implicitly[x.y.type <:< String] // ~ type(x.y)
-}
-
-
 
 

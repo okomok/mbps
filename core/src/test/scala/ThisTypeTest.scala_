@@ -1,0 +1,28 @@
+
+
+package okomok.mbpstest
+
+import okomok.mbps.makro.TypeOf
+
+
+class ThisTypeTest extends org.scalatest.junit.JUnit3Suite {
+
+
+    class A {
+         def self: self = this
+        type self = this.type
+    }
+
+    def A: A = new A
+
+    val a: A = A
+
+    def id[a](a: a): a = a
+
+    implicitly[A#self =:= A]
+    implicitly[TypeOf.apply(a.self) =:= A]
+
+    def testTrivial {
+    }
+
+}

@@ -1,0 +1,60 @@
+
+
+package okomok.mbpstest
+
+
+import okomok.mbps._
+
+
+object Test extends App {
+   okomok.mbps.Macros.hello
+
+   import SelfType._
+
+   class A extends selfType
+
+   trait Foo { // extends selfType {
+       type foo
+       def foo: foo
+   }
+
+   class Bar extends Foo { // with selfType {
+       type foo = Int
+       def foo: foo = 2
+   }
+
+   object MyBar extends Bar
+
+//   type foo[x <: Foo] = TypeOf(foo[x])
+   def foo[x <: Foo](x: x) = x.foo
+
+   trait First[A, B] {
+       type ret = A
+   }
+
+//   val x: MyBar.Self = "hello"
+
+//   implicitly[MyBar.Self =:= Bar]
+
+    import TypeOf._
+
+    val x: TypeOf(3) = 3
+
+    trait Self {
+        type self = TypeOf(this)
+    }
+
+    trait Hey extends Self
+
+ //   val y: Hey#self = 3
+
+//    implicitly[Hey#self =:= Hey]
+
+    // type x = Throw.go
+
+
+    type x = Throw.Delay
+//    type y = x#apply
+
+}
+

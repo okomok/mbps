@@ -1,0 +1,14 @@
+
+
+package okomok.mbpstest
+
+import okomok.mbps.makro.Summary
+
+
+class SummaryTest extends org.scalatest.junit.JUnit3Suite {
+
+    def testTrivial {
+        val s = Summary("hello")
+        ()
+    }
+}

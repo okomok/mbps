@@ -1,0 +1,45 @@
+
+
+package okomok.mbpstest
+
+
+import scala.language.existentials
+
+
+trait TypeProjectionTest {
+
+    class T {
+        class A
+    }
+
+    type `_.A` = x.A forSome { val x: T }
+    type K = x.A forSome { val x: T }
+
+    implicitly[K =:= `_.A`]
+    implicitly[`_.A` <:< T#A] // ok
+//    implicitly[T#A <:< `_.A`] // error
+}
+
+
+trait TypeProjectionTest2 {
+    trait TFn1[I, O] {
+        type app[i <: I] <: O
+    }
+
+    trait Test {
+        type a
+        type b
+        type f = TFn1[a, b]
+
+        // compiles,
+        //  browsing the tree shows TypeRefs only
+        type B = f#app[a]
+
+        // should be equivalent to B?
+        //  does not compile though,
+        //  tree shows Existential as expected
+        type B2 = x.app[x.a] forSome { val x: f }
+    }
+
+
+}
