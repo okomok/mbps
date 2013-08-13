@@ -5,13 +5,12 @@ object build extends Build {
     lazy val theSettings = Project.defaultSettings ++ Seq(
         organization := "com.github.okomok",
         version := "0.0.1-SNAPSHOT",
-        scalaVersion := "2.11.0-SNAPSHOT",
+        scalaVersion := "2.10.2",
 
         scalacOptions ++=
             Seq("-unchecked", "-deprecation", "-feature") ++
             Seq("-Yrecursion", "50") ++ Seq("-language", "higherKinds"),
 
-        scalaOrganization := "org.scala-lang.macro-paradise",
 
         libraryDependencies ++= Seq(
             "org.scalatest" % "scalatest_2.10" % "1.9.1" % "test",
@@ -19,10 +18,11 @@ object build extends Build {
         ),
 
         resolvers += Resolver.sonatypeRepo("snapshots"),
+        addCompilerPlugin("org.scala-lang.plugins" % "macro-paradise_2.10.2" % "2.0.0-SNAPSHOT"),
 
         parallelExecution := false,
-        publishArtifact in packageDoc := false,
-        offline := true
+        publishArtifact in packageDoc := false//,
+//        offline := true
     )
 
     lazy val root = Project(
@@ -35,7 +35,7 @@ object build extends Build {
         "macros",
         file("macros"),
         settings = theSettings ++ Seq(
-            libraryDependencies <+= (scalaVersion)("org.scala-lang.macro-paradise" % "scala-reflect" % _))
+            libraryDependencies <+= (scalaVersion)("org.scala-lang" % "scala-reflect" % _))
     )
 
     lazy val core = Project(

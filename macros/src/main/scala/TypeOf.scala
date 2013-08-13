@@ -2,20 +2,18 @@
 
 package okomok.mbps.makro
 
-
+import scala.annotation.StaticAnnotation
 import scala.language.experimental.macros
 import scala.reflect.macros.Context
 
 
-import scala.language.experimental.macros
-import scala.reflect.macros.Context
+class typeOf extends StaticAnnotation {
+    def macroTransform(annottees: Any*) = macro _typeOf.impl
+}
 
 
-object TypeOf {
-    type apply[x](x: x) = macro impl[x]
-
-    def impl[x](c: Context)(x: c.Expr[x])(implicit tx: c.WeakTypeTag[x]): c.Tree = {
-        import c.universe._
-        TypeTree(tx.tpe)
+object _typeOf extends TermToTypeMacro1Impl {
+    override protected def _apply(c: Context)(arg: c.Tree): c.Type = {
+        arg.tpe.widen
     }
 }
